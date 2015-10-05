@@ -65,13 +65,19 @@ void AppManager::setupManagers()
     m_visualEffectsManager.setup();
     m_settingsManager.setup();
     m_resourceManager.setup();
+    m_ledsManager.setup();
+    m_vaseManager.setup();
     m_guiManager.setup();
     
 }
 
 void AppManager::update()
 {
-
+    
+    m_visualEffectsManager.update();
+    m_viewManager.update();
+    m_ledsManager.update();
+    m_vaseManager.update();
 }
 
 
@@ -79,6 +85,8 @@ void AppManager::draw()
 {
     
     ofBackgroundGradient( ofColor(80), ofColor(55), OF_GRADIENT_CIRCULAR );
+    m_viewManager.draw();
+    m_vaseManager.draw();
     m_guiManager.draw();
 }
 

@@ -14,6 +14,8 @@
 
 
 const string LedsManager::LEDS_LIST_PATH = "leds/";
+const int LedsManager::NUM_STRIPS = 1;
+
 
 
 LedsManager::LedsManager(): Manager()
@@ -51,7 +53,24 @@ void LedsManager::setupLeds()
 
 void LedsManager::readLedsPosition()
 {
-    
+    for(int i = 1; i <= NUM_STRIPS; i++)
+    {
+        string led_section_path = LEDS_LIST_PATH + "leds_" + ofToString(i) + ".txt";
+        ofBuffer buffer = ofBufferFromFile(led_section_path);
+        
+        for (ofBuffer::Line it = buffer.getLines().begin(), end = buffer.getLines().end(); it != end; ++it) {
+            string line = *it;
+            
+            //ofLogNotice() << line;
+            ofPoint ledPosition;
+            int id = 0;
+            if(parseLedLine(line,ledPosition,id))
+            {
+                createLed(ledPosition, id);
+            }
+        }
+
+    }
     
 }
 
@@ -63,11 +82,16 @@ void LedsManager::normalizeLeds()
 
 
 
-void LedsManager::createLed(const ofPoint& position, int& id, int channel, LedVector& leds)
+void LedsManager::createLed(const ofPoint& position, int& id)
 {
+    ofPtr<Led> led = ofPtr<Led> (new Led ( position, id ) );
+    led->setColor(ofColor::black);
+    m_leds.push_back(led);
+    
+    ofLogNotice() <<"LedsManager::createLed -> id " << led->getId() << ", x = "  << led->getPosition().x << ", y = "  << led->getPosition().y << ", z = " << led->getPosition().z ;
 }
 
-bool LedsManager::parseLedLine(string& line, ofPoint& position)
+bool LedsManager::parseLedLine(string& line, ofPoint& position, int& id)
 {
     if(line.size() == 0){
         return false;
@@ -75,11 +99,16 @@ bool LedsManager::parseLedLine(string& line, ofPoint& position)
 
     char chars[] = "{}";
     removeCharsFromString(line, chars);
-    vector <string> strings = ofSplitString(line, ", " );
     
-    position.x = ofToFloat(strings[0]);
-    position.y = ofToFloat(strings[1]);
-    position.z = ofToFloat(strings[2]);
+    vector <string> strings = ofSplitString(line, ". " );
+    
+    id = ofToInt(strings[0]);
+    
+    vector <string> positionsStrings = ofSplitString(strings[1], ", " );
+    
+    position.x = ofToFloat(positionsStrings[0]);
+    position.y = ofToFloat(positionsStrings[1]);
+    position.z = ofToFloat(positionsStrings[2]);
     
     return true;
 }

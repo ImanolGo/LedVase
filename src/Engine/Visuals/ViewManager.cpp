@@ -101,7 +101,8 @@ void ViewManager::draw()
 	if(m_showDebugInfo){
         string text = "fps: " + ofToString(ofGetFrameRate(), 2);
         //m_frameRateText->setText(text);
-        ofDrawBitmapString(text, 20, 20);	}
+        //ofDrawBitmapString(text, 20, 20);
+    }
 }
 
 void ViewManager::drawBackround()

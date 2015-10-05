@@ -24,6 +24,7 @@ class LedsManager: public Manager
 {
 
     static const string LEDS_LIST_PATH;
+    static const int NUM_STRIPS;
     
     public:
     
@@ -68,9 +69,9 @@ class LedsManager: public Manager
     
         void readLasersPositionFromGroup(const string& groupName, int& id, vector<int>& sections);
     
-        bool parseLedLine(string& line, ofPoint& position);
+        bool parseLedLine(string& line, ofPoint& position, int& id);
     
-        void createLed(const ofPoint& position, int& id, int channel, LedVector& leds);
+        void createLed(const ofPoint& position, int& id);
     
         void removeCharsFromString( string &str, char* charsToRemove );
     
