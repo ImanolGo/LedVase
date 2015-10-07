@@ -25,10 +25,6 @@
 class ImageManager: public Manager
 {
     
-    typedef vector< ofColor > ColorVector;
-    typedef map< string, ColorVector> ColorVectorMap;
-    typedef map< string, ofImage> ImageMap;
-    
     public:
 
         //! Constructor
@@ -52,27 +48,25 @@ class ImageManager: public Manager
     
     private:
     
-        void saveImages();
+        void saveImage();
     
-        void saveImageSample(const string& key);
+        void saveImageSample();
     
-        void saveImageMirror(const string& key);
+        void saveImageMirror();
     
         void updateColorPixels();
-    
-        void updateLedColorPixels();
-    
-        void updateLaserColorPixels();
     
         string getDateTime();
     
     private:
   
+        typedef vector< ofColor > ColorVector;
+    
         bool                m_isRecording;
         bool                m_mirror;
     
-        ImageMap           m_imageMap;
-        ColorVectorMap     m_colorVectorMap;
+        ofImage             m_image;
+        ColorVector         m_colors;
 };
 
 

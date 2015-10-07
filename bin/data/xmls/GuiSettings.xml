@@ -1,13 +1,17 @@
 <LedVase>
-	<FPS>60.0016</FPS>
-<LedVase/>
-<Color>
-		<Hue>249.796</Hue>
+	<FPS>24.0086</FPS>
+	<Color>
+		<Hue>147.945</Hue>
 		<Saturation>255</Saturation>
-		<Brightness>191.808</Brightness>
+		<Brightness>255</Brightness>
 	</Color>
+	<Image_Export>
+		<Record>0</Record>
+		<Mirror>1</Mirror>
+	</Image_Export>
 	<Perlin_Visuals>
-		<Perlin_Frequency>0.38484</Perlin_Frequency>
-		<Perlin_Speed>0.639271</Perlin_Speed>
+		<Perlin_Frequency>0.4</Perlin_Frequency>
+		<Perlin_Speed>1</Perlin_Speed>
 	</Perlin_Visuals>
+<LedVase/>
 </LedVase>

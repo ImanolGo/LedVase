@@ -53,8 +53,8 @@ void AppManager::setup()
 void AppManager::setupOF()
 {
     ofSetLogLevel(OF_LOG_NOTICE);
-    //ofSetFrameRate(24);
-    ofSetVerticalSync(true);
+    ofSetFrameRate(24);
+    ofSetVerticalSync(false);
     ofSetEscapeQuitsApp(true);
 }
 
@@ -70,6 +70,7 @@ void AppManager::setupManagers()
     m_perlinManager.setup();
     m_ledsManager.setup();
     m_vaseManager.setup();
+    m_imageManager.setup();
     
     m_guiManager.setup();
     
@@ -82,6 +83,7 @@ void AppManager::update()
     m_viewManager.update();
     m_perlinManager.update();
     m_ledsManager.update();
+    m_imageManager.update();
     m_vaseManager.update();
     m_threeDManager.update();
 }

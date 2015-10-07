@@ -22,6 +22,7 @@
 #include "ThreeDManager.h"
 #include "LayoutManager.h"
 #include "PerlinManager.h"
+#include "ImageManager.h"
 
 
 //========================== class AppManager ==============================
@@ -82,6 +83,10 @@ public:
     //! Returns the Perlin manager
     PerlinManager&   getPerlinManager() { return m_perlinManager; }
     
+    //! Returns the Image manager
+    ImageManager&   getImageManager() { return m_imageManager; }
+    
+    
     
     //==========================================================================
     
@@ -125,7 +130,8 @@ private:
     ThreeDManager            m_threeDManager;            ///< Manages the 3D System
     PerlinManager            m_perlinManager;            ///< Manages the Perlin Noise Visuals
     LayoutManager            m_layoutManager;            ///< Manages the Layout
-
+    ImageManager             m_imageManager;             ///< Manages the images to be exported
+    
     bool                     m_debugMode;
 };
 

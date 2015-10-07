@@ -59,6 +59,8 @@ private:
     void setupPerlinGui();
     
     void setupLayoutGui();
+    
+    void setupImageGui();
 
 
 private:
@@ -70,9 +72,13 @@ private:
     
     ofParameterGroup    m_parametersPerlin;
     ofParameterGroup    m_parametersLayout;
+    ofParameterGroup    m_parametersImage;
     
     ofParameter<float>    m_perlinFrequency;
     ofParameter<float>    m_perlinSpeed;
+    
+    ofParameter<bool>     m_imageRecord;
+    ofParameter<bool>     m_imageMirror;
     
     ofParameter<float>      m_hue;
     ofParameter<float>      m_brightness;

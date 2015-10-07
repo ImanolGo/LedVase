@@ -57,99 +57,62 @@ void ImageManager::draw()
 
 void ImageManager::updateColorPixels()
 {
-    this->updateLedColorPixels();
-    this->updateLaserColorPixels();
-}
-
-void ImageManager::updateLedColorPixels()
-{
-    auto ledMap = AppManager::getInstance().getLedsManager().getLeds();
+    auto leds = AppManager::getInstance().getLedsManager().getLeds();
     
-    for( auto& ledVector: ledMap){
-        
-        if(m_colorVectorMap.find(ledVector.first) == m_colorVectorMap.end()){
-            m_colorVectorMap[ledVector.first] = ColorVector();
-            m_imageMap[ledVector.first] = ofImage();
-        }
-        
-        for(auto& led: ledVector.second)
-        {
-            //m_colorVectorMap.at(ledVector.first).push_back(led->getColor());
-            auto& colors = m_colorVectorMap.at(ledVector.first);
-            colors.push_back(led->getColor());
-            //colors.push_back(ofColor::black);
-        }
+    for (auto& led: leds){
+        m_colors.push_back(led->getColor());
     }
-}
-
-
-void ImageManager::updateLaserColorPixels()
-{
-    auto laserMap = AppManager::getInstance().getLedsManager().getLasers();
     
-    for( auto& laserVector: laserMap){
-        
-        if(m_colorVectorMap.find(laserVector.first) == m_colorVectorMap.end()){
-            m_colorVectorMap[laserVector.first] = ColorVector();
-            m_imageMap[laserVector.first] = ofImage();
-        }
-        
-        for(auto& laserGroup: laserVector.second)
-        {
-            //m_colorVectorMap.at(laserVector.first).push_back(laserGroup->getColor());
-            auto& colors = m_colorVectorMap.at(laserVector.first);
-            colors.push_back(laserGroup->getColor());
-        }
-    }
 }
+
 
 
 
 void ImageManager::onRecordingChange(bool& value)
 {
     if (m_isRecording && !value) {
-        this->saveImages();
+        this->saveImage();
     }
     
      m_isRecording = value;
 }
 
 
-void ImageManager::saveImages()
+void ImageManager::saveImage()
 {
     
-    for(auto& colorMap: m_colorVectorMap)
-    {
-        if(m_mirror){
-            this->saveImageMirror(colorMap.first);
-        }
-        else{
-            this->saveImageSample(colorMap.first);
-        }
+    if(m_mirror){
+        this->saveImageMirror();
+    }
+    else{
+        this->saveImageSample();
     }
     
-    m_colorVectorMap.clear();
-    m_imageMap.clear();
+
+    m_image.clear();
+    m_colors.clear();
 }
 
 
 
-void ImageManager::saveImageMirror(const string& key)
+void ImageManager::saveImageMirror()
 {
+    auto leds = AppManager::getInstance().getLedsManager().getLeds();
     
-    int width = AppManager::getInstance().getLedsManager().getNumberLeds(key) + AppManager::getInstance().getLedsManager().getNumberLasers(key);
-    int height = 2*m_colorVectorMap.at(key).size()/width;
+    int width = leds.size();
+    int height = 0;
+    
+    if(width>0){
+        height = 2*m_colors.size()/width;
+    }
+    
     ofLogNotice() <<"ImageManager::saveImageMirror ->  width = " << width;
     ofLogNotice() <<"ImageManager::saveImageMirror ->  height = " << height;
     
-    ofImage& image = m_imageMap.at(key);
-    image.allocate(width, height, OF_IMAGE_COLOR);
+    m_image.clear();
+    m_image.allocate(width, height, OF_IMAGE_COLOR);
     
-    ofPixelsRef pixels = image.getPixelsRef();
-    
-    ColorVector& colorVector = m_colorVectorMap.at(key);
-    
-    //ofLogNotice() <<"ImageManager::saveImageMirror ->  colorVector size = " << colorVector.size();
+    ofPixelsRef pixels = m_image.getPixels();
     
     for (int y = 0; y < height; y++) {
         for (int x = 0; x < width; x++) {
@@ -161,37 +124,39 @@ void ImageManager::saveImageMirror(const string& key)
             }
             
             
-            pixels.setColor(x, y, colorVector[n]);
+            pixels.setColor(x, y, m_colors[n]);
         }
     }
     
-    image.update(); // uploads the new pixels to the gfx card
+    m_image.update(); // uploads the new pixels to the gfx card
     
-    string fileName = "images/saved/image_"+ getDateTime() + "_" + key + ".bmp";
-    image.saveImage(fileName);
+    string fileName = "images/saved/image_vase_" + getDateTime() +  ".bmp";
+    m_image.save(fileName);
     
     ofLogNotice() <<"ImageManager::saveImageMirror ->  Saved " << fileName;
     
 }
 
 
-void ImageManager::saveImageSample(const string& key)
+void ImageManager::saveImageSample()
 {
     
-    int width = AppManager::getInstance().getLedsManager().getNumberLeds(key) + AppManager::getInstance().getLedsManager().getNumberLasers(key);
-    int height = m_colorVectorMap.at(key).size()/width;
+    auto leds = AppManager::getInstance().getLedsManager().getLeds();
+    
+    int width = leds.size();
+    int height = 0;
+    
+    if(width>0){
+        height = m_colors.size()/width;
+    }
     
     ofLogNotice() <<"ImageManager::saveImageMirror ->  width = " << width;
     ofLogNotice() <<"ImageManager::saveImageMirror ->  height = " << height;
     
-    ofImage& image = m_imageMap.at(key);
-    image.allocate(width, height, OF_IMAGE_COLOR);
+    m_image.clear();
+    m_image.allocate(width, height, OF_IMAGE_COLOR);
     
-    ofPixelsRef pixels = image.getPixelsRef();
-    
-    ColorVector& colorVector = m_colorVectorMap.at(key);
-    
-    //ofLogNotice() <<"ImageManager::saveImageMirror ->  colorVector size = " << colorVector.size();
+    ofPixelsRef pixels = m_image.getPixels();
     
     /*
     In a bottom-up DIB, the image buffer starts with the bottom row of pixels, followed by the next row up,
@@ -203,14 +168,14 @@ void ImageManager::saveImageSample(const string& key)
         for (int x = 0; x < width; x++) {
             int y_ = height - y - 1;
             int n = x + y_*width;
-            pixels.setColor(x, y, colorVector[n]);
+            pixels.setColor(x, y, m_colors[n]);
         }
     }
     
-    image.update(); // uploads the new pixels to the gfx card
+    m_image.update(); // uploads the new pixels to the gfx card
     
-    string fileName = "images/saved/image_"+ getDateTime() + "_" + key + ".bmp";
-    image.saveImage(fileName);
+    string fileName = "images/saved/image_vase_" + getDateTime() +  ".bmp";
+    m_image.save(fileName);
     
     ofLogNotice() <<"ImageManager::saveImageSample ->  Saved " << fileName;
     
