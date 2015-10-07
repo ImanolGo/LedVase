@@ -71,7 +71,6 @@ private:
     ofParameterGroup    m_parametersPerlin;
     ofParameterGroup    m_parametersLayout;
     
-    ofParameter<int>      m_perlinResolution;
     ofParameter<float>    m_perlinFrequency;
     ofParameter<float>    m_perlinSpeed;
     

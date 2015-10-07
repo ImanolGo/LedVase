@@ -29,7 +29,7 @@ void LightManager::setup()
     
     ofLogNotice() <<"LightManager::initialized";
     
-     this->setLights();
+    this->setLights();
     
      // light the scene to show off why normals are important
     //this->enable();
@@ -39,19 +39,10 @@ void LightManager::setLights()
 {
     
     ofPtr<ofLight> light = ofPtr<ofLight> (new ofLight());
-    light->setDiffuseColor( ofFloatColor(.85, .85, .55) );
-    light->setSpecularColor( ofFloatColor(1.f, 1.f, 1.f));
+    light->setPosition(1000, 1000, 2000);
+    
     m_lights["pointLight1"] = light;
     
-    light = ofPtr<ofLight> (new ofLight());
-    light->setDiffuseColor( ofFloatColor( 238.f/255.f, 57.f/255.f, 135.f/255.f ));
-    light->setSpecularColor( ofFloatColor(.8f, .8f, .9f));
-    m_lights["pointLight2"] = light;
-    
-    light = ofPtr<ofLight> (new ofLight());
-    light->setDiffuseColor( ofFloatColor(19.f/255.f,94.f/255.f,77.f/255.f) );
-    m_lights["pointLight3"] = light;
-
 }
 
 void LightManager::update()

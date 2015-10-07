@@ -85,10 +85,6 @@ void GuiManager::setupPerlinGui()
     
     m_parametersPerlin.setName("Perlin Visuals");
     
-    m_perlinResolution.set("Perlin Resolution",  64, 2, 256 );
-    m_perlinResolution.addListener(perlinManager, &PerlinManager::onNoiseResolutionChange);
-    m_parametersPerlin.add(m_perlinResolution);
-    
     m_perlinFrequency.set("Perlin Frequency",  0.4, 0.0, 4.0);
     m_perlinFrequency.addListener(perlinManager, &PerlinManager::onNoiseFrequencyChange);
     m_parametersPerlin.add(m_perlinFrequency);

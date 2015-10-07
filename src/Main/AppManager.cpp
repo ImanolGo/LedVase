@@ -91,14 +91,14 @@ void AppManager::draw()
 {
     
     ofBackgroundGradient( ofColor(80), ofColor(55), OF_GRADIENT_CIRCULAR );
-    m_viewManager.draw();
-    m_vaseManager.draw();
-    m_guiManager.draw();
-    
     
     m_threeDManager.begin();
         m_vaseManager.draw();
     m_threeDManager.end();
+    
+    m_viewManager.draw();
+    
+    m_guiManager.draw();
     
 }
 

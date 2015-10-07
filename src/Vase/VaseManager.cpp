@@ -30,13 +30,11 @@ void VaseManager::setup()
 	if(m_initialized)
 		return;
 
-
-	Manager::setup();
-    
     ofLogNotice() <<"VaseManager::initialized" ;
     
+	Manager::setup();
+    
 }
-
 
 void VaseManager::update()
 {

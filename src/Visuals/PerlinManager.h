@@ -31,24 +31,14 @@ class PerlinManager: public Manager
         //! Destructor
         ~PerlinManager();
 
-        //! Setup the Halo Manager
+        //! Setup the Perlin Manager
         void setup();
 
-        //! Update the Halo Manager
+        //! Update the Perlin Manager
         void update();
     
-        //! Draw the Halo Manager
+        //! Draw the Perlin Manager
         void draw();
-    
-        //bool readToPixels(ofPixelsRef pix) {return m_fboReader.readToPixels(m_fbo, pix);}
-    
-        void readToPixels(ofPixelsRef pix) {pix = m_noiseImage.getPixelsRef();}
-    
-        float getWidth()  {return m_noiseImage.getWidth();}
-    
-        float getHeight()  {return m_noiseImage.getHeight();}
-    
-        void onNoiseResolutionChange( int& value);
     
         void onNoiseFrequencyChange(float& value) {m_noiseFrequency = value;}
     
@@ -62,33 +52,19 @@ class PerlinManager: public Manager
     
         void  onPlayNoiseChange(bool value) {m_playNoise = value;}
     
-        void resetPosition();
-
-    
     private:
-    
-        void setupBoundingBox();
-    
-        void setupFbo();
-    
-        void setupNoise();
     
         void updateNoise();
     
     
     private:
   
-        ofFbo               m_fbo;
-
-        ofRectangle         m_boundingBox;
-    
         float       m_noiseFrequency;
         float       m_noiseSpeed;
         int         m_noiseResolution;
     
         ofColor     m_color;
         bool        m_playNoise;
-        ofImage     m_noiseImage;
 };
 
 

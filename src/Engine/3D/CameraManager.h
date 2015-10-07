@@ -50,6 +50,8 @@ public:
 
     //! get camera animation manager
     const CameraAnimationsManager& getCameraAnimationsManager() {return m_cameraAnimationsManager;}
+    
+    ofEasyCam& getCamera() {return m_camera;}
 
 protected:
 

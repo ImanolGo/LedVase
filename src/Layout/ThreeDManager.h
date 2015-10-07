@@ -13,6 +13,8 @@
 #include "LightManager.h"
 #include "Manager.h"
 
+#include "ofxPostProcessing.h"
+
 //========================== class ThreeDManager =======================================
 //==============================================================================
 /** \class ThreeDManager ThreeDManager.h
@@ -57,6 +59,9 @@ protected:
     
     //! setups the light
     void setupLight();
+    
+    //! setups the post processing effects
+    void setupPostProcessing();
 
 
 protected:
@@ -65,5 +70,6 @@ protected:
     LightManager               m_lightManager;         ///< manages and renders all visuals
     CameraManager              m_cameraManager;        ///< manages and renders the cube-sphere
 
+    ofxPostProcessing          m_post;
  };
 

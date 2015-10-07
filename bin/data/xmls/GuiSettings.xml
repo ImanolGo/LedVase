@@ -1,4 +1,13 @@
 <LedVase>
-	<FPS>59.9885</FPS>
+	<FPS>60.0016</FPS>
 <LedVase/>
+<Color>
+		<Hue>249.796</Hue>
+		<Saturation>255</Saturation>
+		<Brightness>191.808</Brightness>
+	</Color>
+	<Perlin_Visuals>
+		<Perlin_Frequency>0.38484</Perlin_Frequency>
+		<Perlin_Speed>0.639271</Perlin_Speed>
+	</Perlin_Visuals>
 </LedVase>

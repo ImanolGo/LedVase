@@ -21,10 +21,7 @@
 
 
 class VaseManager: public Manager
-{
-
-    static const int NUM_HALO_LEDS;
-    
+{    
     public:
 
         //! Constructor
@@ -47,6 +44,11 @@ class VaseManager: public Manager
     
         //! Draw all Leds
         void drawLeds();
+    
+    private:
+    
+    
+    
 };
 
 
