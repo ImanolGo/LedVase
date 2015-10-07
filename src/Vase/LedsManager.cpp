@@ -79,8 +79,34 @@ void LedsManager::readLedsPosition()
 
 void LedsManager::normalizeLeds()
 {
+    float max = 0;
+    for (auto led: m_leds)
+    {
+        auto position = led->getPosition();
+        
+        if(max < abs(position.x)){
+            max = abs(position.x);
+        }
+        
+        if(max < abs(position.y)){
+            max = abs(position.y);
+        }
+        
+        if(max < abs(position.z)){
+            max = abs(position.z);
+        }
+        
+    }
     
-
+    
+    ofLogNotice() <<"LedsManager::normalizeLeds -> max value =  " << max;
+    
+    for (auto led: m_leds)
+    {
+        auto position = led->getPosition();
+        position/=max;
+        led->setPosition(position);
+    }
 }
 
 

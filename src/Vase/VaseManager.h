@@ -33,20 +33,20 @@ class VaseManager: public Manager
         //! Destructor
         ~VaseManager();
 
-        //! Setup the Halo Manager
+        //! Setup the Vase Manager
         void setup();
 
-        //! Update the Halo Manager
+        //! Update the Vase Manager
         void update();
     
-        //! Draw the Halo Manager
+        //! Draw the Vase Manager
         void draw();
     
     
     private:
     
-
-       
+        //! Draw all Leds
+        void drawLeds();
 };
 
 

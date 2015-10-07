@@ -45,6 +45,8 @@ public:
 
     //! End of camera view.
     void end();
+    
+    void setDistance(float distance){m_camera.setDistance(distance);}
 
     //! get camera animation manager
     const CameraAnimationsManager& getCameraAnimationsManager() {return m_cameraAnimationsManager;}

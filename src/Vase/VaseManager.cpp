@@ -46,7 +46,21 @@ void VaseManager::update()
 
 void VaseManager::draw()
 {
-    
+    this->drawLeds();
+}
+
+void VaseManager::drawLeds()
+{
+    float max = 100;
+    auto ledVector = AppManager::getInstance().getLedsManager().getLeds();
+    for (auto led: ledVector) {
+        auto pos = led->getPosition();
+        
+        ofPushMatrix();
+            ofTranslate(pos*100);
+            led->draw();
+        ofPopMatrix();
+    }
 }
 
 

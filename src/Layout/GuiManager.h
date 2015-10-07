@@ -55,6 +55,10 @@ public:
 private:
     
     void setupGuiParameters();
+    
+    void setupPerlinGui();
+    
+    void setupLayoutGui();
 
 
 private:
@@ -64,6 +68,16 @@ private:
     
     ofParameter<float>	m_guiFPS;
     
+    ofParameterGroup    m_parametersPerlin;
+    ofParameterGroup    m_parametersLayout;
+    
+    ofParameter<int>      m_perlinResolution;
+    ofParameter<float>    m_perlinFrequency;
+    ofParameter<float>    m_perlinSpeed;
+    
+    ofParameter<float>      m_hue;
+    ofParameter<float>      m_brightness;
+    ofParameter<float>      m_saturation;
     
    
     bool        m_showGui;  //It defines the whether the gui should be shown or not

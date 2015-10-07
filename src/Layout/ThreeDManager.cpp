@@ -40,6 +40,7 @@ void ThreeDManager::setupManagers()
 void ThreeDManager::setupCamera()
 {
     m_cameraManager.setup();
+    m_cameraManager.setDistance(200);
 }
 
 void ThreeDManager::setupLight()

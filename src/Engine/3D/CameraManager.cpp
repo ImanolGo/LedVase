@@ -41,7 +41,7 @@ void CameraManager::setup()
 
 void CameraManager::setupCamera()
 {
-    m_camera.setDistance(100);
+    
 }
 
 void CameraManager::update()

@@ -20,6 +20,8 @@
 #include "VaseManager.h"
 #include "LedsManager.h"
 #include "ThreeDManager.h"
+#include "LayoutManager.h"
+#include "PerlinManager.h"
 
 
 //========================== class AppManager ==============================
@@ -74,6 +76,12 @@ public:
     //! Returns the 3D manager
     ThreeDManager&   getThreeDManager() { return m_threeDManager; }
     
+    //! Returns the Layout manager
+    LayoutManager&   getLayoutManager() { return m_layoutManager; }
+    
+    //! Returns the Perlin manager
+    PerlinManager&   getPerlinManager() { return m_perlinManager; }
+    
     
     //==========================================================================
     
@@ -115,6 +123,8 @@ private:
     VaseManager              m_vaseManager;              ///< Manages the vase visuals
     LedsManager              m_ledsManager;              ///< Manages the vase's leds
     ThreeDManager            m_threeDManager;            ///< Manages the 3D System
+    PerlinManager            m_perlinManager;            ///< Manages the Perlin Noise Visuals
+    LayoutManager            m_layoutManager;            ///< Manages the Layout
 
     bool                     m_debugMode;
 };
