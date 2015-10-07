@@ -19,6 +19,7 @@
 #include "ViewManager.h"
 #include "VaseManager.h"
 #include "LedsManager.h"
+#include "ThreeDManager.h"
 
 
 //========================== class AppManager ==============================
@@ -70,6 +71,9 @@ public:
     //! Returns the Vase manager
     VaseManager&   getVaseManager() { return m_vaseManager; }
     
+    //! Returns the 3D manager
+    ThreeDManager&   getThreeDManager() { return m_threeDManager; }
+    
     
     //==========================================================================
     
@@ -109,7 +113,8 @@ private:
     ViewManager              m_viewManager;              ///< Manages the visuals
     VisualEffectsManager     m_visualEffectsManager;     ///< Manages the visual effects
     VaseManager              m_vaseManager;              ///< Manages the vase visuals
-    LedsManager              m_ledsManager;              ///< Manages the costume leds
+    LedsManager              m_ledsManager;              ///< Manages the vase's leds
+    ThreeDManager            m_threeDManager;            ///< Manages the 3D System
 
     bool                     m_debugMode;
 };

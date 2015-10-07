@@ -53,6 +53,8 @@ void LedsManager::setupLeds()
 
 void LedsManager::readLedsPosition()
 {
+    int id = 0;
+    
     for(int i = 1; i <= NUM_STRIPS; i++)
     {
         string led_section_path = LEDS_LIST_PATH + "leds_" + ofToString(i) + ".txt";
@@ -63,10 +65,11 @@ void LedsManager::readLedsPosition()
             
             //ofLogNotice() << line;
             ofPoint ledPosition;
-            int id = 0;
-            if(parseLedLine(line,ledPosition,id))
+            
+            if(parseLedLine(line,ledPosition))
             {
                 createLed(ledPosition, id);
+                id++;
             }
         }
 
@@ -85,13 +88,14 @@ void LedsManager::normalizeLeds()
 void LedsManager::createLed(const ofPoint& position, int& id)
 {
     ofPtr<Led> led = ofPtr<Led> (new Led ( position, id ) );
-    led->setColor(ofColor::black);
+    led->setColor(ofColor::grey);
+    led->setWidth(1);
     m_leds.push_back(led);
     
     ofLogNotice() <<"LedsManager::createLed -> id " << led->getId() << ", x = "  << led->getPosition().x << ", y = "  << led->getPosition().y << ", z = " << led->getPosition().z ;
 }
 
-bool LedsManager::parseLedLine(string& line, ofPoint& position, int& id)
+bool LedsManager::parseLedLine(string& line, ofPoint& position)
 {
     if(line.size() == 0){
         return false;
@@ -102,13 +106,13 @@ bool LedsManager::parseLedLine(string& line, ofPoint& position, int& id)
     
     vector <string> strings = ofSplitString(line, ". " );
     
-    id = ofToInt(strings[0]);
+    //id = ofToInt(strings[0]);
     
     vector <string> positionsStrings = ofSplitString(strings[1], ", " );
     
-    position.x = ofToFloat(positionsStrings[0]);
-    position.y = ofToFloat(positionsStrings[1]);
-    position.z = ofToFloat(positionsStrings[2]);
+    position.x = ofToFloat(positionsStrings[0])*0.1;
+    position.y = ofToFloat(positionsStrings[1])*0.1;
+    position.z = ofToFloat(positionsStrings[2])*0.1;
     
     return true;
 }
@@ -137,7 +141,9 @@ void LedsManager::setLedColors(ofPixelsRef pixels)
 
 void LedsManager::draw()
 {
-    
+    for(auto led: m_leds){
+        led->draw();
+    }
 }
 
 

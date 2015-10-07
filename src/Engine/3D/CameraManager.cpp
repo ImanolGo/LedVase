@@ -41,23 +41,22 @@ void CameraManager::setup()
 
 void CameraManager::setupCamera()
 {
-    m_camera = ofPtr<ofEasyCam> (new ofEasyCam());
-    m_cameraAnimationsManager = ofPtr<CameraAnimationsManager> (new CameraAnimationsManager());
+    m_camera.setDistance(100);
 }
 
 void CameraManager::update()
 {
-    m_cameraAnimationsManager->update();
+    m_cameraAnimationsManager.update();
 }
 
 void CameraManager::begin()
 {
-    m_camera->begin();
+    m_camera.begin();
 }
 
 void CameraManager::end()
 {
-    m_camera->end();
+    m_camera.end();
 }
 
 

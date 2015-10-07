@@ -43,8 +43,13 @@ class LightManager: public Manager
 
         //! disables light light
         void disable();
+    
+    private:
 
-    protected:
+        //! setups the  lights
+        void setLights();
+    
+    private:
 
         typedef std::map<string, ofPtr<ofLight> > LightMap; ///< Map of Light points with a string as key
 

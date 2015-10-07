@@ -65,6 +65,7 @@ void AppManager::setupManagers()
     m_visualEffectsManager.setup();
     m_settingsManager.setup();
     m_resourceManager.setup();
+    m_threeDManager.setup();
     m_ledsManager.setup();
     m_vaseManager.setup();
     m_guiManager.setup();
@@ -78,6 +79,7 @@ void AppManager::update()
     m_viewManager.update();
     m_ledsManager.update();
     m_vaseManager.update();
+    m_threeDManager.update();
 }
 
 
@@ -88,6 +90,13 @@ void AppManager::draw()
     m_viewManager.draw();
     m_vaseManager.draw();
     m_guiManager.draw();
+    
+    
+    m_threeDManager.begin();
+        m_ledsManager.draw();
+    m_threeDManager.end();
+    
+    //m_threeDManager.draw();
 }
 
 void AppManager::toggleDebugMode()

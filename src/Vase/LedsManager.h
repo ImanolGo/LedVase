@@ -69,7 +69,7 @@ class LedsManager: public Manager
     
         void readLasersPositionFromGroup(const string& groupName, int& id, vector<int>& sections);
     
-        bool parseLedLine(string& line, ofPoint& position, int& id);
+        bool parseLedLine(string& line, ofPoint& position);
     
         void createLed(const ofPoint& position, int& id);
     

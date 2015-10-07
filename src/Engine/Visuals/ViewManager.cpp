@@ -34,7 +34,7 @@ void ViewManager::setup()
 
     Manager::setup();
 
-    //this->setupGL();
+    this->setupGL();
     this->setup3D();
     //this->setupTextVisuals();
 
@@ -44,7 +44,7 @@ void ViewManager::setup()
 void ViewManager::setupGL()
 {
     
-    ofSetVerticalSync(false);
+    //ofSetVerticalSync(false);
     ofEnableLighting();
     ofEnableAlphaBlending();
     ofEnableSmoothing();

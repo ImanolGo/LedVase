@@ -47,7 +47,7 @@ public:
     void end();
 
     //! get camera animation manager
-    ofPtr<CameraAnimationsManager> getCameraAnimationsManager() {return m_cameraAnimationsManager;}
+    const CameraAnimationsManager& getCameraAnimationsManager() {return m_cameraAnimationsManager;}
 
 protected:
 
@@ -58,8 +58,9 @@ protected:
 
 protected:
 
-    ofPtr<ofEasyCam>  m_camera; // add mouse controls for camera movement
-    ofPtr<CameraAnimationsManager>  m_cameraAnimationsManager; //class in charge of the camera animations
+    
+    ofEasyCam  m_camera; // add mouse controls for camera movement
+    CameraAnimationsManager  m_cameraAnimationsManager; //class in charge of the camera animations
 
 };
 
