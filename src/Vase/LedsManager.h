@@ -24,7 +24,8 @@ class LedsManager: public Manager
 {
 
     static const string LEDS_LIST_PATH;
-    static const int NUM_STRIPS;
+    static const int NUM_CHANNELS;
+    static const int STRIP_SIZE;
     
     public:
     

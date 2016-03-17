@@ -14,7 +14,8 @@
 
 
 const string LedsManager::LEDS_LIST_PATH = "leds/";
-const int LedsManager::NUM_STRIPS = 1;
+const int LedsManager::NUM_CHANNELS = 1;
+const int LedsManager::STRIP_SIZE = 26;
 
 
 
@@ -53,9 +54,12 @@ void LedsManager::setupLeds()
 
 void LedsManager::readLedsPosition()
 {
-    int id = 0;
     
-    for(int i = 1; i <= NUM_STRIPS; i++)
+    int lineNumber = 0;
+    int id = 0;
+    bool upwards = true;
+    
+    for(int i = 1; i <= NUM_CHANNELS; i++)
     {
         string led_section_path = LEDS_LIST_PATH + "leds_" + ofToString(i) + ".txt";
         ofBuffer buffer = ofBufferFromFile(led_section_path);
@@ -67,10 +71,30 @@ void LedsManager::readLedsPosition()
                  string line = buffer.getNextLine();
                  ofPoint ledPosition;
                 
+                
                  if(parseLedLine(line,ledPosition))
                  {
+                     if(ledPosition.z == 0 && lineNumber!=0){
+                         upwards = !upwards;
+                         if (!upwards) {
+                             id = lineNumber + STRIP_SIZE - 1;
+                         }
+                         else{
+                             id = lineNumber;
+                         }
+                         
+                     }
+                     
                      createLed(ledPosition, id);
-                     id++;
+                     
+                     if(upwards){
+                         id++;
+                     }
+                     else{
+                         id--;
+                     }
+                     
+                     lineNumber++;
                  }
             }
         }
