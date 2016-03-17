@@ -1,11 +1,10 @@
 /*
  *  VaseManager.cpp
- *  LED Vase
+ *  Led Vase
  *
- *  Created by Imanol Gomez on 05/10/15.
+ *  Created by Imanol Gomez on 17/03/16.
  *
  */
-
 
 #include "ofMain.h"
 
@@ -31,14 +30,14 @@ void VaseManager::setup()
 		return;
 
     ofLogNotice() <<"VaseManager::initialized" ;
-    
+
 	Manager::setup();
-    
+
 }
 
 void VaseManager::update()
 {
-    
+
 }
 
 
@@ -53,14 +52,10 @@ void VaseManager::drawLeds()
     auto ledVector = AppManager::getInstance().getLedsManager().getLeds();
     for (auto led: ledVector) {
         auto pos = led->getPosition();
-        
+
         ofPushMatrix();
             ofTranslate(pos*100);
             led->draw();
         ofPopMatrix();
     }
 }
-
-
-
-

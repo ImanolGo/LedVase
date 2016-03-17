@@ -34,8 +34,8 @@ void ViewManager::setup()
 
     Manager::setup();
 
-    this->setupGL();
-    this->setup3D();
+    //this->setupGL();
+    //this->setup3D();
     //this->setupTextVisuals();
 
     ofLogNotice() << "ViewManager::initialized ";

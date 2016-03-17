@@ -8,7 +8,6 @@
 #include "ofxPanel.h"
 #include "ofGraphics.h"
 #include "ofImage.h"
-using namespace std;
 
 ofImage ofxPanel::loadIcon;
 ofImage ofxPanel::saveIcon;
@@ -16,21 +15,16 @@ ofImage ofxPanel::saveIcon;
 ofxPanel::ofxPanel()
 :bGrabbed(false){}
 
-ofxPanel::ofxPanel(const ofParameterGroup & parameters, const std::string& filename, float x, float y)
+ofxPanel::ofxPanel(const ofParameterGroup & parameters, string filename, float x, float y)
 : ofxGuiGroup(parameters, filename, x, y)
 , bGrabbed(false){
-	if(!loadIcon.isAllocated() || !saveIcon.isAllocated()){
-		loadIcons();
-	}
-	registerMouseEvents();
-	setNeedsRedraw();
 }
 
 ofxPanel::~ofxPanel(){
 	//
 }
 
-ofxPanel * ofxPanel::setup(const std::string& collectionName, const std::string& filename, float x, float y){
+ofxPanel * ofxPanel::setup(string collectionName, string filename, float x, float y){
 	if(!loadIcon.isAllocated() || !saveIcon.isAllocated()){
 		loadIcons();
 	}
@@ -38,7 +32,7 @@ ofxPanel * ofxPanel::setup(const std::string& collectionName, const std::string&
 	return (ofxPanel*)ofxGuiGroup::setup(collectionName,filename,x,y);
 }
 
-ofxPanel * ofxPanel::setup(const ofParameterGroup & parameters, const std::string& filename, float x, float y){
+ofxPanel * ofxPanel::setup(const ofParameterGroup & parameters, string filename, float x, float y){
 	if(!loadIcon.isAllocated() || !saveIcon.isAllocated()){
 		loadIcons();
 	}
@@ -54,8 +48,8 @@ void ofxPanel::loadIcons(){
 	loadStencilFromHex(loadIcon, loadIconData);
 	loadStencilFromHex(saveIcon, saveIconData);
 
-	loadIcon.getTexture().setTextureMinMagFilter(GL_NEAREST,GL_NEAREST);
-	saveIcon.getTexture().setTextureMinMagFilter(GL_NEAREST,GL_NEAREST);
+	loadIcon.getTextureReference().setTextureMinMagFilter(GL_NEAREST,GL_NEAREST);
+	saveIcon.getTextureReference().setTextureMinMagFilter(GL_NEAREST,GL_NEAREST);
 }
 
 void ofxPanel::generateDraw(){
@@ -108,7 +102,7 @@ void ofxPanel::render(){
 		ofEnableTextureEdgeHack();
 	}
 
-	for(std::size_t i = 0; i < collection.size(); i++){
+	for(int i = 0; i < (int)collection.size(); i++){
 		collection[i]->draw();
 	}
 

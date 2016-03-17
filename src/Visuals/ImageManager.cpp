@@ -99,6 +99,8 @@ void ImageManager::saveImageMirror()
 {
     auto leds = AppManager::getInstance().getLedsManager().getLeds();
     
+    
+    int totalWidth = 500;
     int width = leds.size();
     int height = 0;
     
@@ -110,9 +112,10 @@ void ImageManager::saveImageMirror()
     ofLogNotice() <<"ImageManager::saveImageMirror ->  height = " << height;
     
     m_image.clear();
-    m_image.allocate(width, height, OF_IMAGE_COLOR);
+    m_image.allocate(totalWidth, height, OF_IMAGE_COLOR);
     
-    ofPixelsRef pixels = m_image.getPixels();
+    
+    ofPixelsRef pixels = m_image.getPixelsRef();
     
     for (int y = 0; y < height; y++) {
         for (int x = 0; x < width; x++) {
@@ -128,10 +131,17 @@ void ImageManager::saveImageMirror()
         }
     }
     
+    for (int y = 0; y < height; y++) {
+        for (int x = width; x < totalWidth ; x++) {
+            //ofLogNotice() <<"ImageManager::saveImageSample ->  x = " << x;
+            pixels.setColor(x, y, ofColor::black);
+        }
+    }
+    
     m_image.update(); // uploads the new pixels to the gfx card
     
     string fileName = "images/saved/image_vase_" + getDateTime() +  ".bmp";
-    m_image.save(fileName);
+    m_image.saveImage(fileName);
     
     ofLogNotice() <<"ImageManager::saveImageMirror ->  Saved " << fileName;
     
@@ -153,16 +163,18 @@ void ImageManager::saveImageSample()
     ofLogNotice() <<"ImageManager::saveImageMirror ->  width = " << width;
     ofLogNotice() <<"ImageManager::saveImageMirror ->  height = " << height;
     
+    int totalWidth = 500;
     m_image.clear();
-    m_image.allocate(width, height, OF_IMAGE_COLOR);
+    m_image.allocate(totalWidth, height, OF_IMAGE_COLOR);
     
-    ofPixelsRef pixels = m_image.getPixels();
+    ofPixelsRef pixels = m_image.getPixelsRef();
     
     /*
     In a bottom-up DIB, the image buffer starts with the bottom row of pixels, followed by the next row up,
     and so forth. The top row of the image is the last row in the buffer.
     Therefore, the first byte in memory is the bottom-left pixel of the image.
     */
+    
     
     for (int y = 0; y < height; y++) {
         for (int x = 0; x < width; x++) {
@@ -172,10 +184,17 @@ void ImageManager::saveImageSample()
         }
     }
     
+    for (int y = 0; y < height; y++) {
+        for (int x = width; x < totalWidth ; x++) {
+            //ofLogNotice() <<"ImageManager::saveImageSample ->  x = " << x;
+            pixels.setColor(x, y, ofColor::black);
+        }
+    }
+    
     m_image.update(); // uploads the new pixels to the gfx card
     
     string fileName = "images/saved/image_vase_" + getDateTime() +  ".bmp";
-    m_image.save(fileName);
+    m_image.saveImage(fileName);
     
     ofLogNotice() <<"ImageManager::saveImageSample ->  Saved " << fileName;
     

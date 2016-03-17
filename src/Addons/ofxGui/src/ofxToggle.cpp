@@ -1,6 +1,5 @@
 #include "ofxToggle.h"
 #include "ofGraphics.h"
-using namespace std;
 
 ofxToggle::ofxToggle(ofParameter<bool> _bVal, float width, float height){
 	setup(_bVal,width,height);
@@ -21,13 +20,13 @@ ofxToggle * ofxToggle::setup(ofParameter<bool> _bVal, float width, float height)
 
 	value.addListener(this,&ofxToggle::valueChanged);
 	registerMouseEvents();
-	setNeedsRedraw();
+	generateDraw();
 
 	return this;
 
 }
 
-ofxToggle * ofxToggle::setup(const std::string& toggleName, bool _bVal, float width, float height){
+ofxToggle * ofxToggle::setup(string toggleName, bool _bVal, float width, float height){
 	value.set(toggleName,_bVal);
 	return setup(value,width,height);
 }
@@ -159,5 +158,5 @@ ofAbstractParameter & ofxToggle::getParameter(){
 }
 
 void ofxToggle::valueChanged(bool & value){
-    setNeedsRedraw();
+	generateDraw();
 }

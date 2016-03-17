@@ -40,8 +40,10 @@ void GuiManager::setup()
 
 
     this->setupGuiParameters();
+    this->setupModesGui();
     this->setupLayoutGui();
     this->setupImageGui();
+    this->setupVideoGui();
     this->setupPerlinGui();
     this->loadGuiValues();
     
@@ -57,6 +59,27 @@ void GuiManager::setupGuiParameters()
     //m_gui.setPosition(20, 20);
     m_gui.add(m_guiFPS.set("FPS", 0, 0, 60));
     ofxGuiSetFont( "fonts/open-sans/OpenSans-Semibold.ttf", 9 );
+}
+
+
+void GuiManager::setupModesGui()
+{
+    
+    m_parametersModes.setName("Modes");
+    
+    m_videoMode.set("Video",  false );
+    m_videoMode.addListener(this, &GuiManager::onSetVideoMode);
+    m_parametersModes.add(m_videoMode);
+    
+    m_perlinMode.set("Perlin",  false );
+    m_perlinMode.addListener(this, &GuiManager::onSetPerlinMode);
+    m_parametersModes.add(m_perlinMode);
+    
+    m_animationMode.set("Animations",  false );
+    m_animationMode.addListener(this, &GuiManager::onSetAnimationMode);
+    m_parametersModes.add(m_animationMode);
+    
+    m_gui.add(m_parametersModes);
 }
 
 void GuiManager::setupLayoutGui()
@@ -96,6 +119,25 @@ void GuiManager::setupImageGui()
     
     
     m_gui.add(m_parametersImage);
+}
+
+void GuiManager::setupVideoGui()
+{
+    auto videoManager = &AppManager::getInstance().getVideoManager();
+    
+    m_parametersVideo.setName("Video");
+    
+    m_nextVideo.setup("Next Video");
+    m_nextVideo.addListener(videoManager, &VideoManager::onNextVideoChange);
+    
+    
+    m_recordVideoLoops.set("Record Video Loops", false);
+    m_recordVideoLoops.addListener(videoManager, &VideoManager::onRecordVideoLoopsChange);
+    m_parametersVideo.add(m_recordVideoLoops);
+    
+    m_gui.add(m_parametersVideo);
+    m_gui.add(&m_nextVideo);
+    
 }
 
 void GuiManager::setupPerlinGui()
@@ -142,6 +184,42 @@ void GuiManager::loadGuiValues()
 void GuiManager::toggleGui()
 {
     m_showGui = !m_showGui;
+}
+
+
+void GuiManager::onSetPerlinMode(bool& value)
+{
+    if(value == true){
+        m_animationMode = false;
+        m_videoMode = false;
+        AppManager::getInstance().getVideoManager().onPlayVideoChange(false);
+        AppManager::getInstance().getPerlinManager().onPlayNoiseChange(true);
+        AppManager::getInstance().getAnimationsManager().onPlayAnimationsChange(false);
+    }
+}
+
+void GuiManager::onSetAnimationMode(bool& value)
+{
+    if(value == true){
+        m_perlinMode = false;
+        m_videoMode = false;
+        AppManager::getInstance().getVideoManager().onPlayVideoChange(false);
+        AppManager::getInstance().getPerlinManager().onPlayNoiseChange(false);
+        AppManager::getInstance().getAnimationsManager().onPlayAnimationsChange(true);
+    }
+    
+}
+
+void GuiManager::onSetVideoMode(bool& value)
+{
+    if(value == true){
+        m_perlinMode = false;
+        m_animationMode = false;
+        AppManager::getInstance().getVideoManager().onPlayVideoChange(true);
+        AppManager::getInstance().getPerlinManager().onPlayNoiseChange(false);
+        AppManager::getInstance().getAnimationsManager().onPlayAnimationsChange(false);
+    }
+    
 }
 
 

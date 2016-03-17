@@ -140,17 +140,17 @@ namespace itg
     
     void PostProcessing::debugDraw()
     {
-        raw.getTexture().draw(10, 10, 300, 300);
+        raw.getTextureReference().draw(10, 10, 300, 300);
         raw.getDepthTexture().draw(320, 10, 300, 300);
         pingPong[currentReadFbo].draw(630, 10, 300, 300);
     }
     
-    void PostProcessing::draw(float x, float y) const
+    void PostProcessing::draw(float x, float y)
     {
         draw(x, y, width, height);
     }
     
-    void PostProcessing::draw(float x, float y, float w, float h) const
+    void PostProcessing::draw(float x, float y, float w, float h)
     {
         if (flip)
         {
@@ -166,8 +166,8 @@ namespace itg
     
     ofTexture& PostProcessing::getProcessedTextureReference()
     {
-        if (numProcessedPasses) return pingPong[currentReadFbo].getTexture();
-        else return raw.getTexture();
+        if (numProcessedPasses) return pingPong[currentReadFbo].getTextureReference();
+        else return raw.getTextureReference();
     }
     
     // need to have depth enabled for some fx

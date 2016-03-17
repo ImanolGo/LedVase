@@ -39,14 +39,14 @@ void AppManager::setup()
 		return;
 
     //ofSetDataPathRoot("../Resources/data/");
-    
+
     ofLogNotice() << "AppManager::initialized";
 
 	Manager::setup();
-    
+
     this->setupOF();
 	this->setupManagers();
-    
+
     //setDebugMode(m_debugMode);
 }
 
@@ -65,43 +65,52 @@ void AppManager::setupManagers()
     m_visualEffectsManager.setup();
     m_settingsManager.setup();
     m_resourceManager.setup();
+    m_videoManager.setup();
     m_threeDManager.setup();
     m_layoutManager.setup();
+    m_guiManager.setup();
     m_perlinManager.setup();
     m_ledsManager.setup();
     m_vaseManager.setup();
     m_imageManager.setup();
-    
-    m_guiManager.setup();
-    
+    m_animationsManager.setup();
+
+    m_videoManager.resetPosition();
+    m_animationsManager.resetPosition();
+
+
+
 }
 
 void AppManager::update()
 {
-    
+
     m_visualEffectsManager.update();
     m_viewManager.update();
     m_perlinManager.update();
     m_ledsManager.update();
     m_imageManager.update();
     m_vaseManager.update();
+    m_videoManager.update();
     m_threeDManager.update();
 }
 
 
 void AppManager::draw()
 {
-    
+
     ofBackgroundGradient( ofColor(80), ofColor(55), OF_GRADIENT_CIRCULAR );
-    
+
     m_threeDManager.begin();
         m_vaseManager.draw();
     m_threeDManager.end();
-    
+
     m_viewManager.draw();
-    
+
+    m_videoManager.draw();
+
     m_guiManager.draw();
-    
+
 }
 
 void AppManager::toggleDebugMode()
@@ -114,18 +123,15 @@ void AppManager::toggleDebugMode()
 void AppManager::setDebugMode(bool showDebug)
 {
     m_debugMode = showDebug;
-    
+
     ofLogNotice()<<"AppManager::setDebugMode-> " << m_debugMode;
-    
+
     if(m_debugMode){
         //ofSetLogLevel(OF_LOG_VERBOSE);
     }
     else{
         ofSetLogLevel(OF_LOG_NOTICE);
     }
-    
-    
+
+
 }
-
-
-

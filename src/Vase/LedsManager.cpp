@@ -60,16 +60,18 @@ void LedsManager::readLedsPosition()
         string led_section_path = LEDS_LIST_PATH + "leds_" + ofToString(i) + ".txt";
         ofBuffer buffer = ofBufferFromFile(led_section_path);
         
-        for (ofBuffer::Line it = buffer.getLines().begin(), end = buffer.getLines().end(); it != end; ++it) {
-            string line = *it;
-            
-            //ofLogNotice() << line;
-            ofPoint ledPosition;
-            
-            if(parseLedLine(line,ledPosition))
+        if(buffer.size())
+        {
+            while(buffer.isLastLine() == false)
             {
-                createLed(ledPosition, id);
-                id++;
+                 string line = buffer.getNextLine();
+                 ofPoint ledPosition;
+                
+                 if(parseLedLine(line,ledPosition))
+                 {
+                     createLed(ledPosition, id);
+                     id++;
+                 }
             }
         }
 
@@ -101,20 +103,61 @@ void LedsManager::normalizeLeds()
     
     ofLogNotice() <<"LedsManager::normalizeLeds -> max value =  " << max;
     
+    bool firstIteration = true;
+    
     for (auto led: m_leds)
     {
         auto position = led->getPosition();
         position/=max;
         led->setPosition(position);
+        
+        ofLogNotice() <<"LedsManager::normalizeLeds -> id " << led->getId() << ", x = "  << led->getPosition().x << ", y = "  << led->getPosition().y << ", z = " << led->getPosition().z ;
+        
+        if(firstIteration){
+            firstIteration = false;
+            m_maxPos = position;
+            m_minPos = position;
+        }
+        
+        if(m_maxPos.x < position.x){
+            m_maxPos.x = position.x;
+        }
+        
+        if(m_maxPos.y < position.y){
+            m_maxPos.y = position.y;
+        }
+        
+        if(m_maxPos.z < position.z){
+            m_maxPos.z = position.z;
+        }
+        
+        if(m_minPos.x > position.x){
+            m_minPos.x = position.x;
+        }
+        
+        if(m_minPos.y > position.y){
+            m_minPos.y = position.y;
+        }
+        
+        if(m_minPos.z > position.z){
+            m_minPos.z = position.z;
+        }
+        
     }
+    
+    ofLogNotice() <<"LedsManager::normalizeLeds -> min position: x = "  << m_minPos.x << ", y = "  << m_minPos.y << ", z = " << m_minPos.z ;
+    ofLogNotice() <<"LedsManager::normalizeLeds -> max position: x = "  << m_maxPos.x << ", y = "  << m_maxPos.y << ", z = " << m_maxPos.z ;
 }
 
 
 
 void LedsManager::createLed(const ofPoint& position, int& id)
 {
+    int numLeds = 88;
+    
     ofPtr<Led> led = ofPtr<Led> (new Led ( position, id ) );
-    led->setColor(ofColor::grey);
+    int color = ofMap(id,0,numLeds-1,0,255);
+    led->setColor(color);
     led->setWidth(1);
     m_leds.push_back(led);
     
@@ -130,11 +173,11 @@ bool LedsManager::parseLedLine(string& line, ofPoint& position)
     char chars[] = "{}";
     removeCharsFromString(line, chars);
     
-    vector <string> strings = ofSplitString(line, ". " );
+    //vector <string> strings = ofSplitString(line, ". " );
     
     //id = ofToInt(strings[0]);
     
-    vector <string> positionsStrings = ofSplitString(strings[1], ", " );
+    vector <string> positionsStrings = ofSplitString(line, ", " );
     
     position.x = ofToFloat(positionsStrings[0])*0.1;
     position.y = ofToFloat(positionsStrings[1])*0.1;
@@ -157,11 +200,16 @@ void LedsManager::update()
 void LedsManager::setPixels(ofPixelsRef pixels)
 {
     this->setLedColors(pixels);
+    
+    AppManager::getInstance().getImageManager().update();
 }
 
 void LedsManager::setLedColors(ofPixelsRef pixels)
 {
-
+    for(auto led: m_leds){
+        led->setPixelColor(pixels);
+    }
+    
 }
 
 

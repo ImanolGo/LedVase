@@ -1,8 +1,8 @@
 /*
  *  VideoManager.cpp
- *  LED Vase
+ *  LED Costume
  *
- *  Created by Imanol Gomez on 07/10/15.
+ *  Created by Imanol Gomez on 20/07/15.
  *
  */
 
@@ -15,9 +15,9 @@
 
 const string VideoManager::VIDEO_PATH = "videos/";
 
-VideoManager::VideoManager(): Manager(), m_playVideo(false)
+VideoManager::VideoManager(): Manager(), m_playVideo(false), m_recordVideoLoops(false)
 {
-	//Intentionally left empty
+    //Intentionally left empty
 }
 
 
@@ -29,11 +29,11 @@ VideoManager::~VideoManager()
 
 void VideoManager::setup()
 {
-	if(m_initialized)
-		return;
-
-
-	Manager::setup();
+    if(m_initialized)
+        return;
+    
+    
+    Manager::setup();
     
     this->loadVideos();
     this->setupBoundingBox();
@@ -50,12 +50,12 @@ void VideoManager::loadVideos()
     ofDirectory dir(VIDEO_PATH);
     dir.allowExt("mp4");
     dir.allowExt("mov");
-    dir.allowExt("avi"); 
+    dir.allowExt("avi");
     //populate the directory object
     if(dir.listDir()==0){
-         ofLogNotice()<< "VideoManager::loadVideos-> No samples found in \""<<VIDEO_PATH<<"\"";
+        ofLogNotice()<< "VideoManager::loadVideos-> No samples found in \""<<VIDEO_PATH<<"\"";
     }
-
+    
     //go through and print out all the paths
     for(int i = 0; i < dir.numFiles(); i++)
     {
@@ -100,22 +100,25 @@ void VideoManager::update()
     }
     
     
+    //ofLogNotice()<< "VideoManager::update: ";
+
     if(m_videoPlayer.isFrameNew())
     {
         ofPixels pixels;
         m_fbo.readToPixels(pixels);
         AppManager::getInstance().getLedsManager().setPixels(pixels);
+        //ofLogNotice()<< "VideoManager::newFrame: ";
     }
     
-    if(!m_videoPlayer.isPlaying()){
-         m_playVideo = false;
-         //AppManager::getInstance().getImageManager().onRecordingChange(m_playVideo);
-         m_playVideo = true;
-         onNextVideoChange();
+    if(m_recordVideoLoops && !m_videoPlayer.isPlaying()){
+        m_playVideo = false;
+        AppManager::getInstance().getImageManager().onRecordingChange(m_playVideo);
+        m_playVideo = true;
+        onNextVideoChange();
     }
     
     
-     m_videoPlayer.update();
+    m_videoPlayer.update();
 }
 
 
@@ -126,19 +129,23 @@ void VideoManager::draw()
     }
     
     m_fbo.begin();
-        ofPushStyle();
-            ofClear(0);
-            ofSetColor(m_color);
-            m_videoPlayer.draw(0,0);
-        ofPopStyle();
+    ofPushStyle();
+    ofClear(0);
+    ofSetColor(m_color);
+    m_videoPlayer.draw(0,0);
+    ofPopStyle();
     m_fbo.end();
     
     m_fbo.draw(m_boundingBox);
+    
+    //m_videoPlayer.draw(0,0);
     
 }
 
 void VideoManager::onPlayVideoChange(bool value)
 {
+    ofLogNotice()<< "VideoManager::onPlayVideoChange: " << value;
+    
     if(value){
         m_playVideo = true;
         m_videoPlayer.play();
@@ -147,6 +154,19 @@ void VideoManager::onPlayVideoChange(bool value)
         m_playVideo = false;
         m_videoPlayer.stop();
     }
+}
+
+void VideoManager::onRecordVideoLoopsChange(bool& value) {
+    
+    m_recordVideoLoops = value;
+    
+    if(m_recordVideoLoops){
+        m_videoPlayer.setLoopState(OF_LOOP_NONE);
+    }
+    else{
+        m_videoPlayer.setLoopState(OF_LOOP_NORMAL);
+    }
+    
 }
 
 void VideoManager::onNextVideoChange()
@@ -163,10 +183,15 @@ void VideoManager::onNextVideoChange()
     m_videoPlayer.loadMovie(m_currentVideo);
     
     if(m_playVideo){
-        //m_videoPlayer.setLoopState(OF_LOOP_NONE);
+        
         m_videoPlayer.setLoopState(OF_LOOP_NORMAL);
+        
+        if(m_recordVideoLoops){
+            m_videoPlayer.setLoopState(OF_LOOP_NONE);
+        }
+        
         m_videoPlayer.play();
-        //AppManager::getInstance().getImageManager().onRecordingChange(m_playVideo);
+        AppManager::getInstance().getImageManager().onRecordingChange(m_playVideo);
         
     }
     

@@ -55,6 +55,10 @@ class LedsManager: public Manager
     
         void setLedColors(ofPixelsRef pixels);
     
+        const ofPoint getMin() const {return m_minPos;}
+    
+        const ofPoint getMax() const {return m_maxPos;}
+    
     
     private:
     
@@ -79,6 +83,8 @@ class LedsManager: public Manager
     private:
     
         LedVector          m_leds;
+        ofPoint            m_minPos;
+        ofPoint            m_maxPos;
     
 };
 

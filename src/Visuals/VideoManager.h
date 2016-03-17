@@ -1,8 +1,8 @@
 /*
  *  VideoManager.h
- *  LED Vase
+ *  LED Costume
  *
- *  Created by Imanol Gomez on 07/10/15.
+ *  Created by Imanol Gomez on 20/07/15.
  *
  */
 
@@ -25,58 +25,61 @@ class VideoManager: public Manager
     
     static const string VIDEO_PATH;
     
-    public:
-
-        //! Constructor
-        VideoManager();
-
-        //! Destructor
-        ~VideoManager();
-
-        //! Setup the Video Manager
-        void setup();
-
-        //! Update the Video Manager
-        void update();
+public:
     
-        //! Draw the Video Manager
-        void draw();
+    //! Constructor
+    VideoManager();
     
-        void  onPlayVideoChange(bool value);
+    //! Destructor
+    ~VideoManager();
     
-        void  onNextVideoChange();
+    //! Setup the Video Manager
+    void setup();
     
-        void resetPosition();
+    //! Update the Video Manager
+    void update();
     
-        void onHueChange(float& value) {m_color.setHue(value);}
+    //! Draw the Video Manager
+    void draw();
     
-        void onBrightnessChange(float& value) {m_color.setBrightness(value);}
+    void  onPlayVideoChange(bool value);
     
-        void onSaturationChange(float& value) {m_color.setSaturation(value);}
+    void  onNextVideoChange();
     
-    private:
+    void onRecordVideoLoopsChange(bool& value);
     
-        void setupFbo();
+    void resetPosition();
     
-        void loadVideos();
+    void onHueChange(float& value) {m_color.setHue(value);}
     
-        void setupBoundingBox();
-
+    void onBrightnessChange(float& value) {m_color.setBrightness(value);}
     
-    private:
+    void onSaturationChange(float& value) {m_color.setSaturation(value);}
     
-        typedef vector <string> Videos;
+private:
     
-        ofVideoPlayer 	m_videoPlayer;
-        Videos          m_videos;
-        string          m_currentVideo;
+    void setupFbo();
     
-        bool            m_playVideo;
-        ofRectangle     m_boundingBox;
+    void loadVideos();
     
-        ofFbo           m_fbo;
-        ofColor         m_color;
-
+    void setupBoundingBox();
+    
+    
+private:
+    
+    typedef vector <string> Videos;
+    
+    ofVideoPlayer 	m_videoPlayer;
+    Videos          m_videos;
+    string          m_currentVideo;
+    
+    bool            m_playVideo;
+    bool            m_recordVideoLoops;
+    ofRectangle     m_boundingBox;
+    
+    ofFbo           m_fbo;
+    ofColor         m_color;
+    
 };
 
 

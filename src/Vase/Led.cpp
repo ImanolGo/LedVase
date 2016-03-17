@@ -8,6 +8,7 @@
 
 
 #include "Led.h"
+#include "AppManager.h"
 
 
 const int Led::SIZE = 4;
@@ -52,6 +53,23 @@ void Led::normalize(const ofRectangle& boundingBox)
 
 void Led::setPixelColor(ofPixelsRef pixels)
 {
-    m_color = pixels.getColor(m_position.x * pixels.getWidth(), m_position.y * pixels.getHeight());
+    float minX = AppManager::getInstance().getLedsManager().getMin().x;
+    float maxX = AppManager::getInstance().getLedsManager().getMax().x;
+    
+    float minY = AppManager::getInstance().getLedsManager().getMin().z;
+    float maxY = AppManager::getInstance().getLedsManager().getMax().z;
+    
+    //ofLogNotice() << minY; ofLogNotice() << maxY;
+    
+    //ofLogNotice() << pixels.getWidth(); ofLogNotice() << pixels.getHeight();
+    ofVec2f pixelPos;
+    pixelPos.x = ofMap(m_position.x, minX, maxX, 0, pixels.getWidth()-1);
+    pixelPos.y = ofMap(m_position.z, maxY, minY, 0, pixels.getHeight()-1);
+    
+    //ofLogNotice() <<  m_position.x ; ofLogNotice() <<  m_position.y;
+    //ofLogNotice() <<  pixelPos.x ; ofLogNotice() <<  pixelPos.y;
+   //ofLogNotice() << pixelPos.x;
+    
+    m_color = pixels.getColor((int)pixelPos.x, (int)pixelPos.y);
 }
 

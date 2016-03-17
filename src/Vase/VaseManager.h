@@ -1,8 +1,8 @@
 /*
  *  VaseManager.h
- *  LED Vase
+ *  Led Vase
  *
- *  Created by Imanol Gomez on 05/10/15.
+ *  Created by Imanol Gomez on 17/03/16.
  *
  */
 
@@ -15,13 +15,13 @@
 //========================== class VaseManager ==============================
 //============================================================================
 /** \class VaseManager VaseManager.h
- *	\brief Class managing the costume visuals
- *	\details it creates and updates the costume visuals
+ *	\brief Class managing the vase visuals
+ *	\details it creates and updates the vase visuals
  */
 
 
 class VaseManager: public Manager
-{    
+{
     public:
 
         //! Constructor
@@ -35,21 +35,18 @@ class VaseManager: public Manager
 
         //! Update the Vase Manager
         void update();
-    
+
         //! Draw the Vase Manager
         void draw();
-    
-    
+
+
     private:
-    
+
         //! Draw all Leds
         void drawLeds();
-    
+
     private:
-    
-    
-    
+
+
+
 };
-
-
-
