@@ -35,6 +35,8 @@ void ImageManager::setup()
 
 	Manager::setup();
     
+    m_image.clear();
+    m_colors.clear();
     
     ofLogNotice() <<"ImageManager::initialized" ;
     
@@ -72,6 +74,10 @@ void ImageManager::onRecordingChange(bool& value)
 {
     if (m_isRecording && !value) {
         this->saveImage();
+    }
+    else{
+        m_image.clear();
+        m_colors.clear();
     }
     
      m_isRecording = value;

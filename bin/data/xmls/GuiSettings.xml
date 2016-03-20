@@ -1,5 +1,5 @@
 <LedVase>
-	<FPS>24.02</FPS>
+	<FPS>15.5994</FPS>
 	<Color>
 		<Hue>147.945</Hue>
 		<Saturation>255</Saturation>
@@ -7,7 +7,7 @@
 	</Color>
 	<Image_Export>
 		<Record>0</Record>
-		<Mirror>0</Mirror>
+		<Mirror>1</Mirror>
 	</Image_Export>
 	<Perlin_Visuals>
 		<Perlin_Frequency>0.174927</Perlin_Frequency>
@@ -15,12 +15,12 @@
 	</Perlin_Visuals>
 <LedVase/>
 <Modes>
-		<Perlin>1</Perlin>
+		<Perlin>0</Perlin>
 		<Animations>0</Animations>
-	<Video>0</Video>
+	<Video>1</Video>
 	</Modes>
 <Video>
-		<Record_Video_Loops>1</Record_Video_Loops>
+		<Record_Video_Loops>0</Record_Video_Loops>
 	</Video>
 <group/>
 </LedVase>

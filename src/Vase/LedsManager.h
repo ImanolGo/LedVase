@@ -59,7 +59,7 @@ class LedsManager: public Manager
         const ofPoint getMin() const {return m_minPos;}
     
         const ofPoint getMax() const {return m_maxPos;}
-    
+ 
     
     private:
     
@@ -67,6 +67,8 @@ class LedsManager: public Manager
         void setupLeds();
     
         void readLedsPosition();
+    
+        void sortLeds();
     
         void normalizeLeds();
     
@@ -79,6 +81,9 @@ class LedsManager: public Manager
         void createLed(const ofPoint& position, int& id);
     
         void removeCharsFromString( string &str, char* charsToRemove );
+    
+    
+    
     
 
     private:

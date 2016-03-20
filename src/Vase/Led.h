@@ -21,7 +21,13 @@ class Led: public BasicVisual {
         Led(const ofPoint& position, int id);
     
         virtual ~Led();
-       
+    
+        //bool operator<(const Led &l1, const Led &l2);
+    
+        //bool operator<(const Led &led) const { return this->getId() < led.getId(); }
+    
+       // bool operator<(const Led &led) const;
+    
         void draw();
     
         void draw(int width, int height);
@@ -32,11 +38,15 @@ class Led: public BasicVisual {
     
         void setPixelColor(ofPixelsRef pixels);
     
+
     private:
             
         int m_id;
 
 };
+
+
+
 
 
 

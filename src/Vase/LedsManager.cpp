@@ -49,6 +49,7 @@ void LedsManager::setup()
 void LedsManager::setupLeds()
 {
     this->readLedsPosition();
+    this->sortLeds();
     this->normalizeLeds();
 }
 
@@ -101,6 +102,36 @@ void LedsManager::readLedsPosition()
 
     }
     
+}
+
+void LedsManager::sortLeds()
+{
+    
+    LedVector aux;
+    
+    while (!m_leds.empty())
+    {
+        int min = 10000;
+        int n = 0;
+        
+        for (int i = 0; i<m_leds.size(); i++) {
+            if(m_leds[i]->getId() < min)
+            {
+                n = i;
+                min = m_leds[i]->getId() ;
+            }
+        }
+        
+        aux.push_back(m_leds[n]);
+        m_leds.erase(m_leds.begin() + n);
+    }
+    
+    m_leds = aux;
+    //std::sort(m_leds.begin(), m_leds.end(), compare);
+    
+    //auto comp = []( const Led& w1, const Led& w2 ){ return w1.getId() < w2.getId(); }
+    
+    //std::sort(m_leds.begin(), m_leds.end(), [] (Led const& a, Led const& b) { return a.getId() < b.getId(); });
 }
 
 void LedsManager::normalizeLeds()
