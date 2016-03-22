@@ -15,7 +15,7 @@
 
 const string LedsManager::LEDS_LIST_PATH = "leds/";
 const int LedsManager::NUM_CHANNELS = 1;
-const int LedsManager::STRIP_SIZE = 26;
+const int LedsManager::STRIP_SIZE = 25;
 
 
 
@@ -58,7 +58,7 @@ void LedsManager::readLedsPosition()
     
     int lineNumber = 0;
     int id = 0;
-    bool upwards = true;
+    bool upwards = false;
     
     for(int i = 1; i <= NUM_CHANNELS; i++)
     {
@@ -75,7 +75,8 @@ void LedsManager::readLedsPosition()
                 
                  if(parseLedLine(line,ledPosition))
                  {
-                     if(ledPosition.z == 0 && lineNumber!=0){
+                     if(ledPosition.z == 0)
+                     {
                          upwards = !upwards;
                          if (!upwards) {
                              id = lineNumber + STRIP_SIZE - 1;
@@ -85,17 +86,21 @@ void LedsManager::readLedsPosition()
                          }
                          
                      }
-                     
-                     createLed(ledPosition, id);
-                     
-                     if(upwards){
-                         id++;
+                     else
+                     {
+                         createLed(ledPosition, id);
+                         
+                         if(upwards){
+                             id++;
+                         }
+                         else{
+                             id--;
+                         }
+                         
+                         lineNumber++;
                      }
-                     else{
-                         id--;
-                     }
                      
-                     lineNumber++;
+                   
                  }
             }
         }

@@ -1,5 +1,5 @@
 <LedVase>
-	<FPS>15.5994</FPS>
+	<FPS>24.0045</FPS>
 	<Color>
 		<Hue>147.945</Hue>
 		<Saturation>255</Saturation>
@@ -7,7 +7,7 @@
 	</Color>
 	<Image_Export>
 		<Record>0</Record>
-		<Mirror>1</Mirror>
+		<Mirror>0</Mirror>
 	</Image_Export>
 	<Perlin_Visuals>
 		<Perlin_Frequency>0.174927</Perlin_Frequency>
